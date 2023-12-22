@@ -1,0 +1,86 @@
+﻿
+@using LibrairieDTICRosemont.VIewModels
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Connexion";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <section>
+            <form id="account" method="post">
+                <h2 class="text-center">Utiliser un compte local pour se connecter</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="@Model.Email" class="form-label">Email</label>
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.Password" type="password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Mot de passe" />
+                    <label asp-for="@Model.Password" class="form-label">Mot de passe</label>
+                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                </div>
+                <div class="checkbox mb-3">
+                    <label asp-for="@Model.RememberMe" class="form-label">
+                        <input class="form-check-input" asp-for="@Model.RememberMe" />
+                        Remember Me
+                    </label>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Se connecter</button>
+                </div>
+                <div>
+                    <p class="text-center">
+                        <a id="forgot-password" >Mot de passe oublié ?</a>
+                    </p>
+                    <p class="text-center">
+                        <a asp-controller="Account" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl">S'inscrire en tant que nouvel utilisateur</a>
+                    </p>
+                    <p class="text-center">
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Renvoyer la confirmation par email</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-6 offset-md-3">
+        <section>
+            <h3 class="text-center">Utiliser un autre service pour se connecter</h3>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p class="text-center">
+                            Aucun service d'authentification externe n'est configuré. Consultez cet <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article</a> pour configurer cette application ASP.NET afin de prendre en charge la connexion via des services externes.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal text-center">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins!)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.LoginProvider" title="Se connecter avec votre compte @provider.LoginProvider">@provider.LoginProvider</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

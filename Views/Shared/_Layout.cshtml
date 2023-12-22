@@ -1,0 +1,185 @@
+﻿@using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Client> SignInManager
+@inject UserManager<Client> UserManager
+
+@{
+    var username = User.Identity.IsAuthenticated ? UserManager.GetUserName(User) : null;
+}
+
+<script>
+    // Stocker le nom d'utilisateur côté client
+    var initialUsername = '@username';
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LibrairieDTICRosemont</title>
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/css/carroussel.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/footer.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/style.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script src="~/js/chatScript.js" asp-append-version="true"></script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:#3b4494;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("LibrairieDTICRosemont", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="~/Home/Index"><span class="glyphicon glyphicon-home"></span></a></li>
+                    <li>@Html.ActionLink("A propos", "About", "Home")</li>
+                    <!-- Affichage du menu des catégories dans le layout -->
+                    @await Component.InvokeAsync("CategoriesMenu")
+
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <!-- Affichage du menu Administration dans le layout -->
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.Partial("_Administration")
+                    }
+                    <li>
+                        <form class="navbar-form navbar-left" method="POST" action="~/Livres/Search">
+                            <div class="input-group" id="barRecherche">
+                                <input type="text" class="form-control" placeholder="Search" name="searchName" id="searchName">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                    <li>
+                        <a href="~/Paniers/Index">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+
+                            @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                            @{
+
+                                var total = 0;
+                                var cartItems = new List<Panier>();
+                                var cart = HttpContextAccessor.HttpContext.Session.GetString("Cart");
+
+                                @if (!string.IsNullOrEmpty(cart))
+                                {
+                                    cartItems = JsonConvert.DeserializeObject<List<LibrairieDTICRosemont.Models.Panier>>(cart);
+                                    // Faites quelque chose avec la liste cartItems
+
+                                }
+
+                            }
+                            @if (cartItems != null && cartItems.Count() != 0)
+                            {
+                                @foreach (var item in cartItems)
+                                {
+                                    total += item.Quantite;
+                                }
+                            }
+
+                            @if (cartItems != null && cartItems.Count() != 0)
+                            {
+
+                                <span class="badge" style="background-color:red;">
+                                    @if (!string.IsNullOrEmpty(cart))
+                                    {
+                                        @total
+                                    }
+                                </span>
+                            }
+                        </a>
+                    </li>
+                    <li>
+                        @Html.Partial("_LoginPartial")
+                    </li>
+
+                    <li style="margin-left:60px">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+
+                            <div id="chat-form-container" data-username="@UserManager.GetUserName(User)">
+                                <div id="chat-messages-container">
+                                    <!-- Container pour afficher les messages -->
+                                </div>
+                                <div class="chat-body">
+                                    <form class="chat-input" id="chat-form">
+                                        <input type="hidden" name="roomId" value="">
+                                        <input type="text" name="message" id="message-input" size="30" placeholder="Taper un message">
+                                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                                    </form>
+
+                                </div>
+                            </div>
+
+
+                            <div>
+                                <a class="room-button" id="create-room-btn" onclick="toggleChatForm()">
+                                    <strong class="fas fa-comment" style="color:white; font-size: 30px;"></strong>
+                                    <p>Conversation</p>
+                                </a>
+                            </div>
+
+
+                        }
+                    </li>
+
+                </ul>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="container">
+
+
+
+
+
+
+        <main role="main" class="pb-3">
+
+
+
+            @RenderBody()
+            <hr />
+            <!-- Affichage la vue Partiel _Footer l dans le layout -->
+            @Html.Partial("_Footer")
+        </main>
+
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,184 @@
+﻿@using Newtonsoft.Json;
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LibrairieDTICRosemont</title>
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/css/carroussel.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/footer.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/style.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<div style="background-color:white;padding:1%;margin:1%; margin-bottom:0;" class="row" id='repereGestProd'>
+    <div class="col-xs-12 col-md-12">
+        <div class="row">
+            <div class="col-xs-12 col-md-2">
+                <a href="index.php" style="color:black;"><span class="glyphicon glyphicon-home"> </span></a>
+                <span class="glyphicon glyphicon-chevron-right"> <b>Panier_Liste</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <h3>Votre panier  LibrairieDTICRosemon</h3>
+            </div>
+
+            <div class="col-xs-12 col-md-2" style="text-align:center; font-size:12px;line-height:8px;">
+                <a href="~/Home/Index" id="addProduit">
+                    <p><span class="glyphicon glyphicon-plus-sign" style="font-size: 25px;"></span></p>
+                    <p>Ajouter un nouveau Livre a votre panier</p>
+                </a>
+            </div>
+
+            <div class="col-xs-12 col-md-1" style="text-align:center; font-size:12px;line-height:8px;">
+                <a href="#">
+                    <p><span class="glyphicon glyphicon-cog" style="font-size: 25px;"></span></p>
+                    <p>Configuration</p>
+                </a>
+            </div>
+
+            <div class="col-xs-12 col-md-1" style="text-align:center; font-size:12px;line-height:8px;">
+                <a href="">
+                    <p><span class="glyphicon glyphicon-question-sign" style="font-size: 25px;"></span></p>
+                    <p>Aide</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-------------------------------------------------------------------------------------------------------------------------------->
+<br>
+<div class="row" id="myDiv" style='padding:2%;background-color:white; margin:1%;margin-top:0;'>
+
+    <!-------------------------------------------------------------------------------------------------------------------------------------->
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading"><b> section</b></div>
+            <div class="panel-body">
+                <p style="margin-bottom:5px; font-weight:bold; font-size:18px;"> </p>
+                <!--<button type="button" class="btn btn-primary" style=" white-space: normal;">Conclure la transaction</button> -->
+                <br>
+            </div>
+        </div>
+    </div>
+    <!-------------------------------------------------------------------------------------------------------------------------------------->
+
+    <div class="col-md-8">
+        <div class="row">
+            <div class=col-md-12>
+                @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                @{
+
+                    var cartItems = new List<Panier>();
+                    var cart = HttpContextAccessor.HttpContext.Session.GetString("Cart");
+
+                    @if (!string.IsNullOrEmpty(cart))
+                    {
+                        cartItems = JsonConvert.DeserializeObject<List<LibrairieDTICRosemont.Models.Panier>>(cart);
+                        // Faites quelque chose avec la liste cartItems
+                    }
+                    int i = 0;
+                }
+                <table class="table">
+                    @foreach (var livre in cartItems)
+                    {
+                      
+                        <tr>
+                            <td>
+                                <img src="~/@livre.Livre.Photo" style="width:150px;height:150px;" /></td>
+                            <td>
+                                <form method="post" action="~/Paniers/Edit/@livre.Livre.LivreId">
+                                    @Html.AntiForgeryToken()
+                                    <b>Titre :</b> @livre.Livre.Titre<hr />
+                                    <br /><b>Prix :</b> @livre.Livre.Prix $<hr />
+                                    <br /><b>Quantite :</b> <input type="number" min="1" max="99" value="@livre.Quantite" name="qte" style="border-radius:3px;">
+
+                                    <div class="row">
+                                        <div class="col-md-12" style="text-align:right">
+
+                                            <span>
+                                                <a href="~/Paniers/Delete/@livre.Livre.LivreId" onclick="return confirm('Voulez-vous vraiment supprimer ce livre de votre panier ?')">
+                                                    <span class="glyphicon glyphicon-trash" style="color:red;"></span> Supprimer
+                                                </a>
+                                            </span>
+                                            <span>&nbsp;|</span>
+                                            <button type="submit" class="btn btn-link">
+                                                <span class="glyphicon glyphicon-edit" style="color:green;"></span> Mettre à jour
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+
+                        </tr>
+                        i = i + 1;
+                    }
+
+                </table>
+
+
+            </div>
+        </div>
+        @{
+            var s = cartItems.Sum(p => p.Quantite * p.Livre.Prix);
+            var taxes = Math.Round((decimal)s * 0.14975m, 2);
+            var total = s + taxes;
+        }
+
+        <div class="row">
+            <div class="col-md-12" style="font-size: 14px; text-align: right; background-color: white; padding-right: 20px; margin-right: 20px;">
+                <table class="table" style="float: right; line-height: 30px; width: 30%">
+                    <tr>
+                        <td colspan="2" style="border: 0px;">
+                            Sous-Total (@cartItems.Count() @if (cartItems.Count() != 1)
+                            {
+                                @Html.Raw("objets")
+                                ;
+                            }
+                            else { Html.Raw("objet"); }) : @s $
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Taxe de vente : @taxes $</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p style="margin-bottom: 5px; font-weight: bold; font-size: 18px;">
+                                Total : @total $
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right: 10px;"><a href="~/Home/Index" class="btn btn-default">Poursuivre mes achats</a></td>
+                        <td><a class="btn btn-primary" href="index.php?promo=1">Conclure la transaction</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading"><b> Recapilatif du panier</b></div>
+            <div class="panel-body">
+                <p style="margin-bottom:5px; font-weight:bold; font-size:18px;"> Total : @total $</p>
+                <button type="button" class="btn btn-primary" style=" white-space: normal;">Conclure la transaction</button>
+                <br>
+
+            </div>
+        </div>
+    </div>
+
+</div>

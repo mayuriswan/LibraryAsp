@@ -1,0 +1,40 @@
+﻿@model IEnumerable<LibrairieDTICRosemont.Models.Categorie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Affichage la vue Partiel _Carroussel -->
+@Html.Partial("_Carroussel")
+<h3 class="text-center">Bienvenue chers visiteurs</h3>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        if (item.livres.Count != 0)
+        {
+            <div class="col-md-12">
+                <h5><b>Les Livres de : @item.Designation</b></h5>
+                <hr />
+            </div>
+        }
+
+        @foreach (var SubItem in item.livres)
+        {
+            <div class="col-md-3 col-xs-12" style="height:380px;">
+                <div class="thumbnail text-center" style="padding-left: 15px; padding-bottom: 15px;">
+                    <a href="~/Home/Details/@SubItem.LivreId">
+                        <!-- Créez un lien autour de l'image -->
+                        <img src="/@SubItem.Photo" alt="Photo du livre" style="height: 200px; width: 200px;" />
+                    </a> <!-- Fermez la balise <a> ici -->
+
+                    <h5><b>Titre : </b>@Html.DisplayFor(model => SubItem.Titre)</h5>
+                    <h5><b>Prix : </b>@Html.DisplayFor(model => SubItem.Prix)</h5>
+                    <p><b>Quantité Disponible : </b><span style="color: green;">@Html.DisplayFor(model => SubItem.Quantite)</span></p>
+                    <a href="~/Home/Details/@SubItem.LivreId" class="btn btn-primary">Plus de détails</a>
+                </div>
+
+            </div>
+        }
+    }
+</div>

@@ -1,0 +1,183 @@
+﻿@model LibrairieDTICRosemont.Models.Livre
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-center m-3">Ajout des livres</h1>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+   
+</head>
+<div id="scrolRepere"></div>
+
+
+<hr />
+
+<form asp-controller="Livres" asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="border border-secondary rounded p-3">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+
+                <div class="form-group row">
+        <label asp-for="ISBN" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <input asp-for="ISBN" class="form-control" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+    </div>
+
+                <div class="form-group row">
+        <label asp-for="Titre" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <input asp-for="Titre" class="form-control" />
+            <span asp-validation-for="Titre" class="text-danger"></span>
+        </div>
+    </div>
+
+                <div class="form-group row">
+        <label asp-for="CategorieId" class="control-label col-md-2">Categorie</label>
+        <div class="col-md-10">
+         
+            <select asp-for="CategorieId" asp-items="ViewBag.CategorieId" class="form-control"></select>
+            <span asp-validation-for="CategorieId" class="text-danger"></span>
+        </div>
+    </div>
+
+
+                <div class="form-group row">
+        <label asp-for="AuteurId" class="control-label col-md-2">Auteur</label>
+        <div class="col-md-10">
+            <select asp-for="AuteurId" asp-items="ViewBag.AuteurId" class="form-control"></select>
+            <span asp-validation-for="AuteurId" class="text-danger"></span>
+        </div>
+    </div>
+
+                <div class="form-group row">
+        <label asp-for="EditeurId" class="control-label col-md-2">Editeur</label>
+        <div class="col-md-10">
+            <select asp-for="EditeurId" asp-items="ViewBag.EditeurId" class="form-control"></select>
+            <span asp-validation-for="EditeurId" class="text-danger"></span>
+        </div>
+    </div>
+
+                <div class="form-group row">
+        <label asp-for="Description" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <textarea asp-for="Description" class="form-control" id="messageContent"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+
+                <div class="form-group row">
+        <label asp-for="Quantite" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <input asp-for="Quantite" class="form-control" id="messageContent" />
+            <span asp-validation-for="Quantite" class="text-danger"></span>
+        </div>
+    </div>
+
+                <div class="form-group row">
+        <label asp-for="Photo" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <input type="file" asp-for="Photo" class="form-control" id="photoLivre" />
+            <span asp-validation-for="Photo" class="text-danger"></span>
+        </div>
+    </div>
+
+                <div class="form-group row">
+        <label asp-for="Prix" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <input asp-for="Prix" class="form-control" />
+            <span asp-validation-for="Prix" class="text-danger"></span>
+        </div>
+    </div>
+
+                <div class="form-group row">
+        <label asp-for="NbPage" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <input asp-for="NbPage" class="form-control" />
+            <span asp-validation-for="NbPage" class="text-danger"></span>
+        </div>
+    </div>
+
+                <div class="form-group row">
+        <label asp-for="DateSortie" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <input asp-for="DateSortie" class="form-control" />
+            <span asp-validation-for="DateSortie" class="text-danger"></span>
+        </div>
+    </div>
+
+
+        <div class="form-group row text-center">
+        <div class="col-md-offset-2 col-md-10">
+            <!--
+                <button type="submit" class="btn btn-success" id="save">Entregistrer</button>
+                           -->
+                <input type="submit" value="Entregistrer" class="btn btn-primary m-3" />
+                <input type="button" value="Annuler" class="btn btn-secondary" id="buttonCancel" />
+        </div>
+    </div>
+
+      
+    </div>
+
+</form>
+
+
+
+<div>
+    <a asp-action="Index">Retour à la liste</a>
+</div>
+
+
+
+@section scripts{
+
+   
+    <script>CKEDITOR.replace("messageContent");</script>
+    <script>
+        $(function () {
+            $("#save").click(function () {
+
+                if (document.getElementById("photoLivre").files.length == 0) {
+                    $("#error-div").fadeIn();
+                    $("#view-err").text("Veuillez Ajouter une image pour ce livre ! ");
+                    $('html, body').animate({ scrollTop: $('#scrolRepere').offset().top }, 'slow');
+                    return false;
+                }
+                if (document.getElementById("photoLivre").files.length != 0) {
+
+
+                    //check if Image extension is valid
+                    var filename = document.getElementById("photoLivre").value;
+                    var extensionImg = filename.substr(filename.lastIndexOf('.') + 1);
+                    var validExtensions = ['jpg', 'png', 'gif', 'bmp'];
+                    if ($.inArray(extensionImg, validExtensions) == -1) {
+                        $("#error-div").fadeIn();
+                        $("#view-err").text("Veuillez selectionner une image avec une extension ['jpg', 'png', 'gif', 'bmp'] ");
+                        $('html, body').animate({ scrollTop: $('#scrolRepere').offset().top }, 'slow');
+                        return false;
+                    }
+                    //check if the image size is valid
+                    var myFileSize = document.getElementById("photoLivre").files[0].size / 1024 / 1024;
+
+                    if (myFileSize > 5) {
+                        $("#error-div").fadeIn();
+                        $("#view-err").text("Veuillez selectionner une image dont la taille est inferieur de 5 mega octet");
+                        $('html, body').animate({ scrollTop: $('#scrolRepere').offset().top }, 'slow');
+                        return false;
+                    }
+                }
+
+            });
+
+        });
+    </script>
+
+}

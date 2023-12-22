@@ -1,0 +1,365 @@
+#searchName {
+    border-radius: 5px;
+}
+body {
+  /*background-color: snow;*/
+  background-color: mintcream;
+  /*background-color: floralwhite;*/
+  font-family: 'Open Sans', 'sans-serif';
+}
+/**
+.mega-dropdown {
+  position: static !important;
+}
+.mega-dropdown-menu {
+    padding: 20px 0px;
+    width: 100%;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.mega-dropdown-menu > li > ul {
+  padding: 0;
+  margin: 0;
+}
+.mega-dropdown-menu > li > ul > li {
+  list-style: none;
+}
+.mega-dropdown-menu > li > ul > li > a {
+  display: block;
+  color: #222;
+  padding: 3px 5px;
+}
+.mega-dropdown-menu > li ul > li > a:hover,
+.mega-dropdown-menu > li ul > li > a:focus {
+  text-decoration: none;
+}
+.mega-dropdown-menu .dropdown-header {
+  font-size: 16px;
+  color: #ff3546;
+  padding: 5px 60px 5px 5px;
+  line-height: 30px;
+}
+*/
+
+.mega-dropdown-menu > li > ul > li > a {
+    display: block;
+    color: #222;
+    padding: 3px 5px;
+   
+}
+.mega-dropdown-menu .dropdown-header {
+    font-size: 16px;
+    color: #ff3546;
+    padding: 5px 60px 5px 5px;
+    line-height: 30px;
+}
+.mega-dropdown-menu {
+    padding: 20px 0px;
+    width: 100%;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.mega-dropdown-menu > li ul > li > a:hover,
+.mega-dropdown-menu > li ul > li > a:focus {
+    text-decoration: none;
+     background-color:cornflowerblue;
+}
+#admin-menu > li > a:hover,
+#admin-menu > li > a:focus {
+    background-color: cornflowerblue;
+}
+
+.mega-dropdown-menu > li > ul > li {
+    list-style: none;
+    text-align: center;
+}
+ 
+.col-sm-3 li a:hover {
+    font-weight: bold;
+    background-color: lightblue;
+}
+
+@media only screen and (max-width: 1200px) {
+  #barRecherche {
+    visibility:hidden;
+    display: none;
+  }
+  #produit{
+    clear: both;
+ }
+
+  .col 
+{ 
+      display: block;
+      width: 100%;
+ }   
+ #modifBar li{
+   display: inline;
+   float: left;
+ }
+ 
+ .navbar-header{display: inline;float: right; }
+
+
+}
+/* -----------------------------------------------------------------------------------------------------------------------------------*/
+#produit{
+  float: left;
+  background-color: white;
+  margin-left: 10px;
+  margin-top: 20px;
+  text-indent:2em; 
+}
+#produit td{text-align: center;}
+
+.tabCat{
+  margin-top: 20px;
+}
+
+#produit img{
+  width:80%;  
+  height: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px; 
+}
+
+
+/* Lorsque l'élément .thumbnail est survolé */
+.thumbnail:hover {
+    cursor: pointer;
+}
+
+    /* Sélection de l'image à l'intérieur de .thumbnail lors du survol */
+    .thumbnail:hover img {
+        transform: scale(1.1);
+        transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+    }
+
+    /* Sélection des balises <h5> à l'intérieur de .thumbnail lors du survol */
+    .thumbnail:hover h5 {
+        opacity: 0.9;
+    }
+
+    /* Sélection des balises <p> à l'intérieur de .thumbnail lors du survol */
+    .thumbnail:hover p {
+        opacity: 0.9;
+    }
+
+    /* Sélection des liens <a> avec la classe .btn à l'intérieur de .thumbnail lors du survol */
+    .thumbnail:hover a.btn {
+        opacity: 0.9;
+    }
+
+/*ajuster caroussel*/
+.carousel-inner > .item > img {
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+   max-height: 500px;
+}
+/*--------------------------------------------ajuster le meme hauteur------------------------------------------------------------------------------------------*/
+#myDiv {
+  overflow: hidden; 
+}
+
+#myDiv [class*="col-"]{
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
+/*----------------------------------------------reseau social------------------------------------------------------------------------------*/
+/*footer social icons */
+ul.social-network {
+  list-style: none;
+  display: inline;
+  margin-left:0 !important;
+  padding: 0;
+}
+ul.social-network li {
+  display: inline;
+  margin: 0 5px;
+}
+
+
+/*footer social icons */
+.social-network a.icoRss:hover {
+  background-color: #F56505;
+}
+.social-network a.icoFacebook:hover {
+  background-color:#3B5998;
+}
+.social-network a.icoTwitter:hover {
+  background-color:#33ccff;
+}
+.social-network a.icoGoogle:hover {
+  background-color:#BD3518;
+}
+.social-network a.icoVimeo:hover {
+  background-color:#0590B8;
+}
+.social-network a.icoLinkedin:hover {
+  background-color:#007bb7;
+}
+.social-network a.icoInstagram:hover {
+  background-color: orangered;
+}
+.social-network a.icoRss:hover i, .social-network a.icoFacebook:hover i, .social-network a.icoTwitter:hover i,
+.social-network a.icoGoogle:hover i, .social-network a.icoVimeo:hover i, .social-network a.icoLinkedin:hover i, .social-network a.icoInstagram:hover i {
+  color:#fff;
+}
+a.socialIcon:hover, .socialHoverClass {
+  color:#44BCDD;
+}
+
+.social-circle li a {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto 0 auto;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    background-color: #fff
+}
+.social-circle li i {
+  margin:0;
+  line-height:30px;
+  text-align: center;
+}
+
+.social-circle li a:hover i, .triggeredHover {
+  -moz-transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+  -ms--transform: rotate(360deg);
+  transform: rotate(360deg);
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.social-circle i {
+  color: black;
+  -webkit-transition: all 0.8s;
+  -moz-transition: all 0.8s;
+  -o-transition: all 0.8s;
+  -ms-transition: all 0.8s;
+  transition: all 0.8s;
+}
+
+a {
+  /*background-color: #fff;*/
+}
+/*--------------------------------------------------------------------------------------*/
+.cadre{
+   padding:10px;
+}
+
+table td{vertical-align: middle;}
+
+/*********************************************************gestprod*******************************************/
+textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  width: 100%;
+}
+
+/* Fenetre mdoal*/
+
+
+#chat-form-container {
+    position: fixed;
+    bottom: 20px; /* Ajustez cette valeur selon vos besoins */ /* Ajustez cette valeur selon vos besoins */
+    right: 20px; /* Ajustez cette valeur selon vos besoins */
+    display: none;
+    /* Autres styles... */
+}
+
+#message-input {
+    height: 40px; /* Ajustez cette valeur selon vos besoins */
+    /* Autres styles... */
+}
+
+#chat-messages-container {
+    display: flex;
+    width: 150px;
+    z-index: 50;
+ 
+    display: flex;
+    flex-direction: column;
+}
+#chat-form-container.active {
+    display: flex;
+    min-width: 230px;
+    max-width: 230px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    padding-bottom:50px
+}
+
+.message-date {
+    color: #888; /* couleur de la date */
+    font-size: 0.8em; /* taille de la date */
+    margin-right: 5px; /* espace entre la date et le nom d'utilisateur */
+}
+
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    min-height: 100vh;
+    min-width: 100vw;
+    z-index: 200;
+    top: 0;
+    left: 0;
+    background-color: rgba(0.2, 0.2, 0.2, 0.8);
+}
+
+    .modal.active {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+.modal-body > .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin-top: 0;
+}
+
+.modal-body {
+    position: relative;
+    min-width: 300px;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    background-color: #5c4773;
+    padding: 1rem;
+}
+
+    .modal-body > * {
+        margin-top: 0.75rem;
+    }
+
+    .modal-body > header {
+        font-size: 24px;
+        color: #fff;
+    }
+
+    .modal-body > div > input {
+        width: 100%;
+    }
+
+    .modal-body > footer {
+        text-align: center;
+    }

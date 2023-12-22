@@ -1,0 +1,121 @@
+﻿@model IEnumerable<LibrairieDTICRosemont.Models.Livre>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+
+<h2 class="text-center">La Liste des livres</h2>
+
+<p>
+    @Html.ActionLink("Ajouter Livre", "Create")
+</p>
+<table class="table table-bordered table-hover text-center" id="tableLivre">
+    <thead>
+        <tr>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Auteur.Nom)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Editeur.Nom)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.ISBN)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Titre)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Categorie.Designation)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Quantite)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Prix)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.NbPage)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Photo)
+            </th>
+
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.DateSortie)
+            </th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="vertical-align: middle;">
+                    @Html.DisplayFor(modelItem => item.Auteur.Nom)
+                </td>
+                <td style="vertical-align: middle;">
+                    @Html.DisplayFor(modelItem => item.Editeur.Nom)
+                </td>
+                <td style="vertical-align: middle;">
+                    @Html.DisplayFor(modelItem => item.ISBN)
+                </td>
+                <td style="vertical-align: middle;">
+                    @Html.DisplayFor(modelItem => item.Titre)
+                </td>
+                <td style="vertical-align: middle;">
+                    @Html.DisplayFor(modelItem => item.Categorie.Designation)
+                </td>
+                <td style="vertical-align: middle;">
+                    @Html.DisplayFor(modelItem => item.Quantite)
+                </td>
+                <td style="vertical-align: middle;">
+                    @Html.DisplayFor(modelItem => item.Prix)
+                </td>
+                <td style="vertical-align: middle;">
+                    @Html.DisplayFor(modelItem => item.NbPage)
+                </td>
+                <td style="vertical-align: middle;">
+                    <img src="/@Html.DisplayFor(modelItem => item.Photo)"
+                         class="thumbnail" style="width:48px;height:48px;" />
+                </td>
+
+                <td style="vertical-align: middle;">
+                    <span class="badge" style="background-color:royalblue"> @Html.DisplayFor(modelItem => item.DateSortie)</span>
+                </td>
+                <td style="vertical-align: middle;">
+                    <a href="~/Livres/Delete/@item.LivreId"><span class="glyphicon glyphicon-trash" style="color:red;"></span></a> |
+                    <a href="~/Livres/Edit/@item.LivreId"><span class="glyphicon glyphicon-edit" style="color:blue;"></span></a> |
+                    <a href="~/Livres/Details/@item.LivreId"><span class="glyphicon glyphicon-eye-open" style="color:green;"></span></a>
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<script src="//cdn.datatables.net/plug-ins/1.10.19/i18n/French.json"></script>
+
+@section scripts {
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#tableLivre').DataTable({
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+
+                }
+            });
+        });
+    </script>
+}
+

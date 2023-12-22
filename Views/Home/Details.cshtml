@@ -1,0 +1,151 @@
+﻿@model LibrairieDTICRosemont.Models.Livre
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<div class="row">
+    <div class="col-md-8 col-xs-6">
+        <h4>Livre</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Photo)
+            </dt>
+
+            <dd>
+                <!--  <img src="/img/ImgLivre/@Html.DisplayFor(model => model.Photo)"-->
+                <img src="/@Html.DisplayFor(model => model.Photo)"
+                     class="thumbnail" style="width:180px;height:180px;" />
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ISBN)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Titre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Titre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Categorie.Designation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Categorie.Designation)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantite)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Quantite)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Prix)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Prix)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NbPage)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NbPage)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateSortie)
+            </dt>
+
+            <dd>
+                <span class="badge"> @Html.DisplayFor(model => model.DateSortie) </span>
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Auteur.Nom)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Auteur.Nom)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Editeur.Nom)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Editeur.Nom)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-4 col-xs-6 text-center">
+        <h4>Section Achats</h4>
+        <hr />
+        <br /><br /><br />
+
+        <form action="~/Paniers/Add/@Model.LivreId" method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group ">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-info" value="Ajouter au panier" data-toggle="tooltip" title="Cliquer ici por ajouter au panier">
+                </div>
+            </div>
+            <br /><br />
+
+            <div class="form-group">
+                <div class="col-md-4">
+                    <label class="control-label">Quantite :</label>
+                </div>
+                <div class="col-md-5 col-md-offset-1">
+                    <input name="qte" id="qte" type="number" class="form-control" value="1" />
+                </div>
+            </div>
+        </form>
+        <br /><br />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="#" class="btn btn-primary">Achat immediat</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd>
+                  
+                    @Html.Raw(System.Net.WebUtility.HtmlDecode(Html.DisplayTextFor(model => model.Description).ToString()))
+
+
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+
+</div>
+<p>
+    @Html.ActionLink("Modifier", "Edit", new { id = Model.LivreId }) |
+    @Html.ActionLink("Retour vers la liste", "Index")
+</p>
