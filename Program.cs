@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using LibrairieDTICRosemont;
+using LibrairieDTICRosemont.Hubs;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -83,11 +84,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<ChatHub>("/chatHub");
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 // app.MapHub<ChatHub>("/chatHub");
 app.MapRazorPages();

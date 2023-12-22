@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LibrairieDTICRosemont")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+77f8041278e626e990f46532275c7074f2aa1f59")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a231494c6fd5be6124780430059d8a60dc613c55")]
 [assembly: System.Reflection.AssemblyProductAttribute("LibrairieDTICRosemont")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LibrairieDTICRosemont")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

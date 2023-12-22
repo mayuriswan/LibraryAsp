@@ -124,7 +124,7 @@
                                     <!-- Container pour afficher les messages -->
                                 </div>
                                 <div class="chat-body">
-                                    <form class="chat-input" id="chat-form">
+                                    <form class="chat-input" id="chat-form" onsubmit="sendMessage(event)">
                                         <input type="hidden" name="roomId" value="">
                                         <input type="text" name="message" id="message-input" size="30" placeholder="Taper un message">
                                         <button type="submit" class="btn btn-primary">Envoyer</button>
